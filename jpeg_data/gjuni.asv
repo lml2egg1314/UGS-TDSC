@@ -1,0 +1,35 @@
+% payload = 0.4;
+addpath('JPEG_Toolbox');
+addpath('jpegtbx');
+QFs = [75, 95];
+for k = 2
+    QF = QFs(k);
+    for iter = 0:10
+        for i = 1:4
+            payload = i/10;
+            tic;
+            disp(datestr(now));
+            des_dir = sprintf('/data/lml/jpeg_test/juni_%s_%s', num2str(payload), num2str(QF));
+            Boss_dir = sprintf('/data/lml/jpeg_test/BossBase-1.01-cover-resample-256-jpeg-%d',QF);
+            Bows_dir = sprintf('/data/lml/jpeg_test/BOWS2-cover-resample-256-jpeg-%d',QF);
+            if iter == 0
+                stego_dir = sprintf('%s/stego', des_dir);
+                cost_dir = sprintf('%s/cost', des_dir);
+                stego_dct_dir = sprintf('%s/stego-dct', des_dir);
+                cover_dct_dir = sprintf('/data/lml/jpeg_test
+                if i == 4
+                    flag = juni_cost_embed1(Boss_dir, Bows_dir, stego_dir, cost_dir, payload, QF); 
+                else
+                    flag = juni_cost_embed(Boss_dir, Bows_dir, stego_dir, cost_dir, payload, QF); 
+                end
+            else     
+                stego_dir = sprintf('%s/stego-iter-%d', des_dir, iter);
+                flag = juni_embed(Boss_dir, Bows_dir, stego_dir,  payload);
+            end
+            
+            disp(flag);
+            toc;
+        end
+    end
+end
+exit;
